@@ -56,6 +56,21 @@ class GrouppController extends Controller
 		));
 	}
 
+    	/**
+	 * Lists all models.
+	 */
+	public function actionIndex()
+	{
+       // $this->redirect(array('view','id'=>$model->idGroup));
+        
+		
+        $dataProvider=new CActiveDataProvider('Groupp');
+		$this->render('index',array(
+			'dataProvider'=>$dataProvider,
+            
+		));
+        
+	}
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
@@ -117,16 +132,7 @@ class GrouppController extends Controller
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
-	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('Groupp');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
+
 
 	/**
 	 * Manages all models.
@@ -135,6 +141,8 @@ class GrouppController extends Controller
 	{
 		$model=new Groupp('search');
 		$model->unsetAttributes();  // clear any default values
+        
+        //$model=Groupp::model()->findByPk(5);
 		if(isset($_GET['Groupp']))
 			$model->attributes=$_GET['Groupp'];
 

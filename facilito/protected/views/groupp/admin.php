@@ -47,6 +47,21 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'columns'=>array(
 		'idGroup',
 		'nameGroup',
+        array(
+            'name'=>'groupHasEmployees.idEmployee',
+            'value'=>'CHtml::encode($data->groupHasEmployees->idEmployee)',
+        ),
+        
+        //array(
+        //'header'=>'User Name', 
+        //'value'=>'CHtml::encode($data->groupHasEmployees->idEmployee)',//This will use the relationship and get all the details of the paticular user from users table
+        
+        //'name'=>'groupHasEmployees.idEmployee',
+        //    'value'=>array($this, 'actionSearch'),
+        //'filter'=>CHtml::textField('groupHasEmployees.idEmployee', Yii::app()->request->getParam('groupHasEmployees.idEmployee')),
+        //    'type' => 'text',
+        //),
+        
 		array(
 			'class'=>'CButtonColumn',
 		),

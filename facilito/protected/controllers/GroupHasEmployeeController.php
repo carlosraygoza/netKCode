@@ -1,6 +1,6 @@
 <?php
 
-class GroupController extends Controller
+class GroupHasEmployeeController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -29,15 +29,15 @@ class GroupController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view'),
-				'users'=>array('@'),
+				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update'),
-				'users'=>array('@'),
+				'users'=>array('*'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
+				'users'=>array('*'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -62,16 +62,16 @@ class GroupController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Group;
+		$model=new GroupHasEmployee;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Group']))
+		if(isset($_POST['GroupHasEmployee']))
 		{
-			$model->attributes=$_POST['Group'];
+			$model->attributes=$_POST['GroupHasEmployee'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->idGroup));
+				$this->redirect(array('view','id'=>$model->idGhe));
 		}
 
 		$this->render('create',array(
@@ -91,11 +91,11 @@ class GroupController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Group']))
+		if(isset($_POST['GroupHasEmployee']))
 		{
-			$model->attributes=$_POST['Group'];
+			$model->attributes=$_POST['GroupHasEmployee'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->idGroup));
+				$this->redirect(array('view','id'=>$model->idGhe));
 		}
 
 		$this->render('update',array(
@@ -122,9 +122,10 @@ class GroupController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Group');
+		$dataProvider=new CActiveDataProvider('GroupHasEmployee');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
+            
 		));
 	}
 
@@ -133,10 +134,10 @@ class GroupController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Group('search');
+		$model=new GroupHasEmployee('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Group']))
-			$model->attributes=$_GET['Group'];
+		if(isset($_GET['GroupHasEmployee']))
+			$model->attributes=$_GET['GroupHasEmployee'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -147,12 +148,12 @@ class GroupController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return Group the loaded model
+	 * @return GroupHasEmployee the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=Group::model()->findByPk($id);
+		$model=GroupHasEmployee::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -160,11 +161,11 @@ class GroupController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param Group $model the model to be validated
+	 * @param GroupHasEmployee $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='group-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='group-has-employee-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

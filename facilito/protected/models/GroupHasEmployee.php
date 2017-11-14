@@ -1,25 +1,27 @@
 <?php
 
 /**
- * This is the model class for table "groupp".
+ * This is the model class for table "group_has_employee".
  *
- * The followings are the available columns in table 'groupp':
+ * The followings are the available columns in table 'group_has_employee':
+ * @property integer $idGhe
  * @property integer $idGroup
- * @property string $nameGroup
+ * @property integer $idEmployee
+ * @property integer $isAdmin
  *
  * The followings are the available model relations:
- * @property GroupHasEmployee[] $groupHasEmployees
- * @property GroupHasSkill[] $groupHasSkills
+ * @property Employee $idEmployee0
+ * @property Groupp $idGroup0
  */
-class Groupp extends CActiveRecord
+class GroupHasEmployee extends CActiveRecord
 {
-    //public $position;
+    public $idE;
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'groupp';
+		return 'group_has_employee';
 	}
 
 	/**
@@ -30,11 +32,11 @@ class Groupp extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nameGroup', 'required'),
-			array('nameGroup', 'length', 'max'=>45),
+			array('idGroup, idEmployee, isAdmin', 'required'),
+			array('idGroup, idEmployee, isAdmin', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idGroup, nameGroup', 'safe', 'on'=>'search'),
+			array('idGhe, idGroup, idEmployee, isAdmin', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,8 +48,8 @@ class Groupp extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'groupHasEmployees' => array(self::HAS_MANY, 'GroupHasEmployee', 'idGroup'),
-			'groupHasSkills' => array(self::HAS_MANY, 'GroupHasSkill', 'idGroup'),
+			'idEmployee0' => array(self::BELONGS_TO, 'Employee', 'idEmployee'),
+			'idGroup0' => array(self::BELONGS_TO, 'Groupp', 'idGroup'),
 		);
 	}
 
@@ -57,8 +59,10 @@ class Groupp extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
+			'idGhe' => 'Id Ghe',
 			'idGroup' => 'Id Group',
-			'nameGroup' => 'Name Group',
+			'idEmployee' => 'Id Employee',
+			'isAdmin' => 'Is Admin',
 		);
 	}
 
@@ -80,23 +84,13 @@ class Groupp extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
+		$criteria->compare('idGhe',$this->idGhe);
 		$criteria->compare('idGroup',$this->idGroup);
-		$criteria->compare('nameGroup',$this->nameGroup,true);
-        
-        $criteria->with =array('groupHasEmployees');
-        $criteria->compare('groupHasEmployees.idEmployee', Yii::app()->request->getParam('groupHasEmployees.idEmployee'), true);
-        $sort = new CSort();
-        $sort->attributes = array(
-            'groupHasEmployees.idEmployee' => array(
-                'asc' => 'groupHasEmployees.idEmployee ASC',
-                'desc' => 'groupHasEmployees.idEmployee DESC'
-            ),
-            '*'
-        );
-        
+		$criteria->compare('idEmployee',$this->idEmployee);
+		$criteria->compare('isAdmin',$this->isAdmin);
+
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
-            'sort' => $sort
 		));
 	}
 
@@ -104,7 +98,7 @@ class Groupp extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Groupp the static model class
+	 * @return GroupHasEmployee the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

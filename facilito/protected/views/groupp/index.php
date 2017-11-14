@@ -12,7 +12,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Groupps</h1>
     <h1>Group Editor</h1>
     <table style="width:auto">
         <tr>
@@ -30,7 +29,18 @@ $this->menu=array(
             </th>
         </tr>
     </table>
+<!---------------------- Groups ------------------------->
+<br><h1><b>Groups</b> in your profile </h1>
+<?php
+    $this->renderPartial('groupsAdded'); //, array('model'=>$model)); //, 'idEmployee'=>$model->idEmployee))
+?>
+
+<!-- --------------------------------------------------- -->
+    <p> <?php /*echo $this->id ?></p>
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
-)); ?>
+    //'id' => $dataProvider->idGroup,
+)); */ ?>
+
+

@@ -16,12 +16,18 @@ $this->menu=array(
 );
 ?>
 
-<h1>View Groupp #<?php echo $model->idGroup; ?></h1>
+<!---------------------- Groups ------------------------->
+<br><h1><b>Groups</b> in your profile </h1>
+<?php
+//$this->renderPartial('groupsAdded'); //, array('model'=>$model)); //, 'idEmployee'=>$model->idEmployee))
+?>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
+<?php 
+$this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		'idGroup',
 		'nameGroup',
 	),
-)); ?>
+)); 
+ ?>
